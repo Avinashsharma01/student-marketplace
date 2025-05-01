@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import api from "../services/app";
+import api from "../../services/app";
 
 const MessageForm = ({ recipientId, productId, onMessageSent, onCancel }) => {
     const [content, setContent] = useState("");

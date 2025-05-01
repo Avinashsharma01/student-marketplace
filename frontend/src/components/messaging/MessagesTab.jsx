@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import MessageForm from "./MessageForm";
 
 const MessagesTab = () => {
@@ -16,7 +16,7 @@ const MessagesTab = () => {
     const fetchMessages = async () => {
         try {
             setLoading(true);
-            const api = await import("../services/app").then(
+            const api = await import("../../services/app").then(
                 (module) => module.default
             );
             const response = await api.get("/messages");
@@ -31,7 +31,7 @@ const MessagesTab = () => {
 
     const markMessageAsRead = async (messageId) => {
         try {
-            const api = await import("../services/app").then(
+            const api = await import("../../services/app").then(
                 (module) => module.default
             );
             await api.put(`/messages/${messageId}/read`);
@@ -53,12 +53,14 @@ const MessagesTab = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-semibold mb-6">My Messages</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">
+                My Messages
+            </h2>
 
             {replyTo && (
-                <div className="mb-6">
-                    <div className="p-3 bg-blue-50 border-l-4 border-blue-500 mb-3">
-                        <p className="text-sm">
+                <div className="mb-4 sm:mb-6">
+                    <div className="p-2 sm:p-3 bg-blue-50 border-l-4 border-blue-500 mb-2 sm:mb-3">
+                        <p className="text-xs sm:text-sm">
                             <span className="font-semibold">
                                 Reply to: {replyTo.senderName}
                             </span>
@@ -82,19 +84,19 @@ const MessagesTab = () => {
             )}
 
             {loading ? (
-                <div className="text-center py-10">Loading...</div>
+                <div className="text-center py-6 sm:py-10">Loading...</div>
             ) : messages.length === 0 ? (
-                <div className="text-center py-10">
+                <div className="text-center py-6 sm:py-10">
                     <p className="text-gray-500">
                         You don't have any messages.
                     </p>
                 </div>
             ) : (
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                     {messages.map((message) => (
                         <div
                             key={message._id}
-                            className={`border rounded-lg p-4 ${
+                            className={`border rounded-lg p-3 sm:p-4 ${
                                 !message.read &&
                                 message.receiver?._id === user?._id
                                     ? "bg-blue-50"
@@ -109,30 +111,32 @@ const MessagesTab = () => {
                                 }
                             }}
                         >
-                            <div className="flex justify-between items-start mb-2">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
                                 <div>
-                                    <span className="font-semibold">
+                                    <span className="font-semibold text-sm sm:text-base">
                                         {message.sender?._id === user?._id
                                             ? `To: ${message.receiver?.name}`
                                             : `From: ${message.sender?.name}`}
                                     </span>
                                     {message.product && (
-                                        <span className="ml-2 text-sm text-gray-600">
+                                        <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-600">
                                             (Re: {message.product?.title})
                                         </span>
                                     )}
                                 </div>
-                                <span className="text-xs text-gray-500">
+                                <span className="text-xs text-gray-500 mt-1 sm:mt-0">
                                     {new Date(
                                         message.createdAt
                                     ).toLocaleString()}
                                 </span>
                             </div>
-                            <p className="text-gray-700">{message.content}</p>
+                            <p className="text-gray-700 text-sm sm:text-base">
+                                {message.content}
+                            </p>
                             {message.sender?._id !== user?._id && (
                                 <div className="mt-2 text-right">
                                     <button
-                                        className="text-blue-600 hover:text-blue-800"
+                                        className="text-blue-600 hover:text-blue-800 text-sm sm:text-base"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleReply(message);

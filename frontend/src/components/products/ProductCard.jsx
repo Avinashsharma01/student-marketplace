@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
+import WishlistContext from "../../context/WishlistContext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const ProductCard = ({
     product,
@@ -11,9 +13,25 @@ const ProductCard = ({
     showSellerActions = false,
 }) => {
     const { user } = useContext(AuthContext);
+    const { addToWishlist, removeFromWishlist, isInWishlist } =
+        useContext(WishlistContext);
 
     // Handle the case where product comes from wishlist (has different structure)
-    const productData = isWishlistItem ? product.product : product;
+    const productData = product;
+
+    // Check if the product is in the user's wishlist
+    const productInWishlist = isWishlistItem || isInWishlist(productData._id);
+
+    const handleWishlistToggle = async (e) => {
+        e.preventDefault(); // Prevent navigation to product detail
+        e.stopPropagation(); // Stop event propagation
+
+        if (productInWishlist) {
+            await removeFromWishlist(productData._id);
+        } else {
+            await addToWishlist(productData._id);
+        }
+    };
 
     // Handle different image URL formats
     const getImageUrl = (url) => {
@@ -38,7 +56,20 @@ const ProductCard = ({
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative">
+            {user && !showSellerActions && (
+                <button
+                    onClick={handleWishlistToggle}
+                    className="absolute top-2 right-2 z-10 p-2 bg-white bg-opacity-75 rounded-full shadow hover:bg-opacity-100 transition-all"
+                >
+                    {productInWishlist ? (
+                        <FaHeart className="text-red-500 text-xl" />
+                    ) : (
+                        <FaRegHeart className="text-gray-500 hover:text-red-500 text-xl" />
+                    )}
+                </button>
+            )}
+
             <Link to={`/products/${productData._id}`}>
                 <img
                     src={getImageUrl(productData.imageUrl)}
@@ -70,24 +101,24 @@ const ProductCard = ({
 
             <div className="px-4 pb-4">
                 {showSellerActions ? (
-                    <div className="flex justify-between">
+                    <div className="flex justify-between gap-2">
                         <button
                             onClick={() =>
                                 onDelete && onDelete(productData._id)
                             }
-                            className="text-red-600 hover:text-red-800"
+                            className="bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-800 px-3 py-1 rounded"
                         >
                             Delete
                         </button>
                         <button
                             onClick={() => onEdit && onEdit(productData)}
-                            className="text-green-600 hover:text-green-800"
+                            className="bg-green-100 text-green-600 hover:bg-green-200 hover:text-green-800 px-3 py-1 rounded"
                         >
                             Edit
                         </button>
                         <Link
                             to={`/products/${productData._id}`}
-                            className="text-blue-600 hover:text-blue-800"
+                            className="bg-blue-100 text-blue-600 hover:bg-blue-200 hover:text-blue-800 px-3 py-1 rounded"
                         >
                             View
                         </Link>

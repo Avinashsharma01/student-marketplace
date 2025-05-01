@@ -4,7 +4,7 @@ import cloudinary from "../config/cloudinary.js";
 // Post Product
 export const postProduct = async (req, res) => {
     try {
-        const { title, description, price, category } = req.body;
+        const { title, description, price, category, contactEmail, contactPhone, whatsappNumber } = req.body;
 
         // Get image URL from Cloudinary result if available
         const imageUrl = req.body.image || null;
@@ -15,6 +15,9 @@ export const postProduct = async (req, res) => {
             price,
             category,
             imageUrl,
+            contactEmail,
+            contactPhone,
+            whatsappNumber,
             user: req.user.userId, // Linking the product to the logged-in user
         });
 

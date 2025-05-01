@@ -14,6 +14,9 @@ const MyProductsTab = () => {
         price: "",
         category: "Books",
         image: null,
+        contactEmail: "",
+        contactPhone: "",
+        whatsappNumber: "",
     });
 
     useEffect(() => {
@@ -23,7 +26,7 @@ const MyProductsTab = () => {
     const fetchMyProducts = async () => {
         try {
             setLoading(true);
-            const api = await import("../services/app").then(
+            const api = await import("../../services/app").then(
                 (module) => module.default
             );
             const response = await api.get("/products/myproducts");
@@ -39,7 +42,7 @@ const MyProductsTab = () => {
     const handleDeleteProduct = async (productId) => {
         if (window.confirm("Are you sure you want to delete this product?")) {
             try {
-                const api = await import("../services/app").then(
+                const api = await import("../../services/app").then(
                     (module) => module.default
                 );
                 await api.delete(`/products/delete/${productId}`);
@@ -59,6 +62,9 @@ const MyProductsTab = () => {
             description: product.description,
             price: product.price,
             category: product.category,
+            contactEmail: product.contactEmail || "",
+            contactPhone: product.contactPhone || "",
+            whatsappNumber: product.whatsappNumber || "",
             image: null, // Image is optional during edit
         });
         setShowNewProductForm(true);
@@ -73,6 +79,9 @@ const MyProductsTab = () => {
             price: "",
             category: "Books",
             image: null,
+            contactEmail: "",
+            contactPhone: "",
+            whatsappNumber: "",
         });
     };
 
@@ -84,6 +93,9 @@ const MyProductsTab = () => {
             price: "",
             category: "Books",
             image: null,
+            contactEmail: "",
+            contactPhone: "",
+            whatsappNumber: "",
         });
         setShowNewProductForm(false);
         setEditingProduct(null);
@@ -92,11 +104,13 @@ const MyProductsTab = () => {
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-semibold">My Products</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-3 sm:mb-0">
+                    My Products
+                </h2>
                 {!showNewProductForm && (
                     <button
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                        className="bg-green-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base rounded hover:bg-green-700 w-full sm:w-auto"
                         onClick={() => setShowNewProductForm(true)}
                     >
                         Add New Product

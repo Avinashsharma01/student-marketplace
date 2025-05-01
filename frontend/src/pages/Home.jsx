@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import api from "../services/app";
 import { toast } from "react-toastify";
 import AuthContext from "../context/AuthContext";
-import HeroSection from "../components/HeroSection";
-import FeaturesSection from "../components/FeaturesSection";
-import CategoriesSection from "../components/CategoriesSection";
-import FeaturedProductsSection from "../components/FeaturedProductsSection";
-import TestimonialsSection from "../components/TestimonialsSection";
-import ProductBrowser from "../components/ProductBrowser";
-import CtaSection from "../components/CtaSection";
-import CloudinaryImageDebugger from "../components/CloudinaryImageDebugger";
+import HeroSection from "../components/sections/HeroSection";
+import FeaturesSection from "../components/sections/FeaturesSection";
+import CategoriesSection from "../components/sections/CategoriesSection";
+import FeaturedProductsSection from "../components/sections/FeaturedProductsSection";
+import TestimonialsSection from "../components/sections/TestimonialsSection";
+import ProductBrowser from "../components/products/ProductBrowser";
+import CtaSection from "../components/sections/CtaSection";
+// import CloudinaryImageDebugger from "../components/CloudinaryImageDebugger";
 
 const Home = () => {
     const { user } = useContext(AuthContext);
@@ -163,9 +163,9 @@ const Home = () => {
             />
 
             {/* Temporarily add the CloudinaryImageDebugger to diagnose image issues */}
-            <div className="container mx-auto px-4">
+            {/* <div className="container mx-auto px-4">
                 <CloudinaryImageDebugger />
-            </div>
+            </div> */}
 
             {/* CTA Section */}
             <CtaSection user={user} />

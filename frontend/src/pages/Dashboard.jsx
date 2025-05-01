@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import DashboardTabs from "../components/DashboardTabs";
-import MyProductsTab from "../components/MyProductsTab";
+import DashboardTabs from "../components/dashboard/DashboardTabs";
+import MyProductsTab from "../components/products/MyProductsTab";
 import WishlistTab from "../components/WishlistTab";
-import MessagesTab from "../components/MessagesTab";
+import MessagesTab from "../components/messaging/MessagesTab";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-4">
                 {/* Navigation Tabs */}
                 <DashboardTabs
                     activeTab={activeTab}
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 />
 
                 {/* Content Area */}
-                <div className="bg-white rounded-lg shadow p-6">
+                <div className="bg-white rounded-lg shadow p-3 sm:p-6">
                     {/* Render appropriate component based on active tab */}
                     {activeTab === "myProducts" && <MyProductsTab />}
                     {activeTab === "wishlist" && <WishlistTab />}

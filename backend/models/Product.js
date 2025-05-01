@@ -23,6 +23,18 @@ const productSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
+        contactEmail: {
+            type: String,
+            match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address'],
+        },
+        contactPhone: {
+            type: String,
+            trim: true,
+        },
+        whatsappNumber: {
+            type: String,
+            trim: true,
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",

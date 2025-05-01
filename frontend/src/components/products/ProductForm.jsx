@@ -38,13 +38,16 @@ const ProductForm = ({
             formData.append("description", product.description);
             formData.append("price", product.price);
             formData.append("category", product.category);
+            formData.append("contactEmail", product.contactEmail || "");
+            formData.append("contactPhone", product.contactPhone || "");
+            formData.append("whatsappNumber", product.whatsappNumber || "");
 
             // Only append image if it exists (new upload)
             if (product.image) {
                 formData.append("image", product.image);
             }
 
-            const api = await import("../services/app").then(
+            const api = await import("../../services/app").then(
                 (module) => module.default
             );
 
@@ -154,6 +157,53 @@ const ProductForm = ({
                         rows="3"
                         required
                     ></textarea>
+                </div>
+
+                <div className="mb-4">
+                    <h4 className="font-medium text-gray-700 mb-2 border-b pb-2">
+                        Contact Information
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Contact Email
+                            </label>
+                            <input
+                                type="email"
+                                name="contactEmail"
+                                value={product.contactEmail || ""}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                placeholder="your@email.com"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Contact Phone
+                            </label>
+                            <input
+                                type="tel"
+                                name="contactPhone"
+                                value={product.contactPhone || ""}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                placeholder="(123) 456-7890"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                WhatsApp Number
+                            </label>
+                            <input
+                                type="tel"
+                                name="whatsappNumber"
+                                value={product.whatsappNumber || ""}
+                                onChange={handleInputChange}
+                                className="w-full p-2 border rounded"
+                                placeholder="+1234567890"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="mb-4">

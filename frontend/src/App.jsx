@@ -3,9 +3,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
-import ProtectedRoute from "./components/ProtectedRoute"; // Import the ProtectedRoute component
-import Header from "./components/Header"; // Import Header component
-import Footer from "./components/Footer"; // Import Footer component
+import { WishlistProvider } from "./context/WishlistContext"; // Import the WishlistProvider
+import ProtectedRoute from "./components/auth/ProtectedRoute"; // Import the ProtectedRoute component
+import Header from "./components/layout/Header"; // Import Header component
+import Footer from "./components/layout/Footer"; // Import Footer component
 import { useContext } from "react"; // Import useContext
 import AuthContext from "./context/AuthContext"; // Import AuthContext
 
@@ -17,6 +18,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
+// import MessageForm from "./components/MessageForm";
 
 // Import Footer Pages
 import About from "./pages/FooterPages/About";
@@ -36,6 +38,7 @@ const AppContent = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/products/:id" element={<ProductDetail />} />
+                    {/* <Route path="/message" element={<MessageForm />} /> */}
 
                     {/* Footer Pages */}
                     <Route path="/about" element={<About />} />
@@ -79,7 +82,9 @@ function App() {
     return (
         <Router>
             <AuthProvider>
-                <AppContent />
+                <WishlistProvider>
+                    <AppContent />
+                </WishlistProvider>
             </AuthProvider>
         </Router>
     );
